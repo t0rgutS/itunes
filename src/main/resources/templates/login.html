@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добро пожаловать!</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<form action="login" method="post" class="mt-5 ml-auto mr-auto w-25 h-25">
+    <p class="font-weight-bolder text-center">АВТОРИЗАЦИЯ
+    <div class="form-group">
+        <input type="text" class="form-control" id="username" name="username" placeholder="Логин" required autofocus>
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Пароль" required>
+    </div>
+    <button type="submit" class="btn btn-primary float-left">Войти</button>
+    <a href="/registration" class="btn btn-secondary float-right">Регистрация</a>
+</form>
+<p>
+    <a class="float-right" href="">Забыли пароль?</a>
+</p>
+<!--/*@thymesVar id="error" type="java.lang.String"*/-->
+<p th:if="${error}" th:text="${error}" class="text-danger"></p>
+</body>
+</html>

@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_users
+      author: fvakhnenko
+      tagDatabase: Version 1
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: login
+                  type: varchar
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: active
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_name
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: smallint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_role_id
+                    referencedTableName: user_roles
+                    referencedColumnNames: role_id
+                    deleteCascade: true
+              - column:
+                  name: created_at
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: bigint
+                  constraints:
+                    nullable: false

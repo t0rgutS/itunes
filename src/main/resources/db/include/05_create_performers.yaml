@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+            id: create_performers
+            author: fvakhnenko
+            tagDatabase: Version 1
+            changes:
+              - createTable:
+                  tableName: performers
+                  columns:
+                    - column:
+                        name: performer_id
+                        type: bigint
+                        autoIncrement: true
+                        constraints:
+                          primaryKey: true
+                          nullable: false
+                    - column:
+                        name: performer_name
+                        type: varchar
+                        constraints:
+                          nullable: false
+                    - column:
+                        name: logo_addr
+                        type: varchar
+                    - column:
+                        name: created_at
+                        type: bigint
+                        constraints:
+                          nullable: false
+                    - column:
+                        name: updated_at
+                        type: bigint
+                        constraints:
+                          nullable: false

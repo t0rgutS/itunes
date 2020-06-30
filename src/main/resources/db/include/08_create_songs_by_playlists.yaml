@@ -1,0 +1,30 @@
+databaseChangeLog:
+   - changeSet:
+              id: create_songs_by_playlists
+              author: fvakhnenko
+              tagDatabase: Version 1
+              changes:
+                - createTable:
+                    tableName: songs_by_playlists
+                    columns:
+                      - column:
+                          name: playlist_id
+                          type: bigint
+                          autoIncrement: true
+                          constraints:
+                            primaryKey: true
+                            foreignKeyName: fk_playlist_id
+                            referencedTableName: playlists
+                            referencedColumnNames: playlist_id
+                            deleteCascade: true
+                            nullable: false
+                      - column:
+                          name: song_id
+                          type: bigint
+                          constraints:
+                            primaryKey: true
+                            foreignKeyName: fk_song_id
+                            referencedTableName: songs
+                            referencedColumnNames: song_id
+                            deleteCascade: true
+                            nullable: false

@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+            id: create_albums
+            author: fvakhnenko
+            tagDatabase: Version 1
+            changes:
+              - createTable:
+                  tableName: albums
+                  columns:
+                    - column:
+                        name: album_id
+                        type: bigint
+                        autoIncrement: true
+                        constraints:
+                          primaryKey: true
+                          nullable: false
+                    - column:
+                        name: album_name
+                        type: varchar
+                        constraints:
+                          nullable: false
+                    - column:
+                        name: album_date
+                        type: date
+                        constraints:
+                          nullable: false
+                    - column:
+                        name: genre_id
+                        type: bigint
+                        constraints:
+                           nullable: false
+                           foreignKeyName: fk_genre_id
+                           referencedTableName: genres
+                           referencedColumnNames: genre_id
+                           deleteCascade: true
+                    - column:
+                        name: performer_id
+                        type: bigint
+                        constraints:
+                           nullable: false
+                           foreignKeyName: fk_performer_id
+                           referencedTableName: performers
+                           referencedColumnNames: performer_id
+                           deleteCascade: true
+                    - columt:
+                        name: cover_addr
+                        type: varchar
+                    - column:
+                        name: created_at
+                        type: bigint
+                        constraints:
+                          nullable: false
+                    - column:
+                        name: updated_at
+                        type: bigint
+                        constraints:
+                          nullable: false

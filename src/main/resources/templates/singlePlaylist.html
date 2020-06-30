@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Плейлист</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<form>
+    <!--/*@thymesVar id="playlist" type="com.vakhnenko.entity.Playlist"*/-->
+    <!--/*@thymesVar id="username" type="java.lang.String"*/-->
+    <div>
+        <nav class="navbar navbar-light bg-light navbar-expand-md">
+            <a th:href="'/playlists/' + ${playlist.getPlaylistId()}" class="navbar-brand"
+               th:text="${playlist.getPlaylistName()}">Плейлист</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="navbar-item">
+                    <a href="/" class="nav-link">Все плейлисты</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/performers" class="nav-link">Исполнители</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/albums" class="nav-link">Альбомы</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/songs" class="nav-link">Песни</a>
+                </li>
+            </ul>
+            <form action="/logout">
+                <button type="submit" class="btn btn btn-danger" th:text="'Выход (' + ${username} + ')'"
+                        name="logout"></button>
+            </form>
+        </nav>
+    </div>
+    <br>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h2 class="display-1" th:text="'Плейлист: ' + ${playlist.getPlaylistName()}"></h2>
+            <br>
+            <p class="lead" th:text="'Создан: ' + ${playlist.creationDate()}"></p>
+            <p class="lead" th:text="'Обновлен: ' + ${playlist.updateDate()}"></p>
+            <p><a th:href="'/update/playlists/' + ${playlist.getPlaylistId()}" class="btn btn-outline-secondary">Изменить
+                название плейлиста</a></p>
+        </div>
+    </div>
+    <br>
+    <a th:href="'/search/songs?playlistName=' + ${playlist.getPlaylistName()}"
+       class="btn btn-outline-primary mt-3 ml-5 mb-3">Поиск трека</a>
+    <!--/*@thymesVar id="songs" type="com.vakhnenko.dto.song.SongResponse[]"*/-->
+    <form>
+        <table class="table" th:if="${songs} != null">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Название</th>
+                <th scope="col">Исполнитель</th>
+                <th scope="col">Альбом</th>
+                <th scope="col">Продолжительность (мин.)</th>
+                <th scope="col"></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="song : ${songs}">
+                <th scope="row" th:text="${songStat.index + 1}"></th>
+                <td th:text="${song.getSongName()}"></td>
+                <td th:text="${song.getAlbum().getPerformer().getPerformerName()}"></td>
+                <td th:text="${song.getAlbum().getAlbumName()}"></td>
+                <td th:text="${song.getSongLength()}"></td>
+                <td>
+                    <button type="submit" name="removeSong" class="btn btn-outline-secondary"
+                            th:value="${song.getSongId()}">Удалить из
+                        плейлиста
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <form>
+        <!--/*@thymesVar id="currentPage" type="java.lang.Integer"*/-->
+        <div class="d-flex justify-content-center mt-5 mb-5">
+            <button name="pageBack" th:value="${currentPage}">&lt;</button>
+            <input type="text" name="currentPage" class="ml-2 mr-2 text-center" th:value="'Страница ' + ${currentPage}"
+                   readonly>
+            <button name="pageForward" th:value="${currentPage}">&gt;</button>
+        </div>
+    </form>
+
+    <!--/*@thymesVar id="error" type="String"*/-->
+    <div th:if="${error} != null">
+        <p th:replace="modals :: errorModal(${error})"></p>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<form th:action="@{/registration}" method="POST" class="mt-5 ml-auto mr-auto w-25 h-25">
+    <p class="font-weight-bolder">РЕГИСТРАЦИЯ
+    <div class="form-group">
+        <!--/*@thymesVar id="login" type="java.lang.String"*/-->
+        <input type="text" class="form-control" th:name="login" placeholder="Логин" th:value="${login}" required>
+    </div>
+    <div class="form-group">
+        <!--/*@thymesVar id="username" type="java.lang.String"*/-->
+        <input type="text" class="form-control" th:name="username" placeholder="Имя в системе" th:value="${username}" required>
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" th:name="password" placeholder="Пароль" required>
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" th:name="confirmPassword" placeholder="Подтверждение пароля" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    <br>
+    <!--/*@thymesVar id="error" type="java.lang.String"*/-->
+    <p th:if="${error}" th:text="${error}" class="text-danger"></p>
+</form>
+</body>
+</html>

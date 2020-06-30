@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Композиции</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<form>
+    <!--/*@thymesVar id="username" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="access" type="java.lang.Boolean"*/-->
+    <div>
+        <nav class="navbar navbar-light bg-light navbar-expand-md">
+            <a href="/songs" class="navbar-brand">Песни</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="navbar-item">
+                    <a href="/" class="nav-link">Все плейлисты</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/performers" class="nav-link">Исполнители</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/albums" class="nav-link">Альбомы</a>
+                </li>
+            </ul>
+            <form action="/logout">
+                <button type="submit" class="btn btn btn-danger" th:text="'Выход (' + ${username} + ')'"
+                        name="logout"></button>
+            </form>
+        </nav>
+    </div>
+    <br>
+
+    <div class="d-flex flex-row mt-5 ml-5 mb-5">
+        <a href="/add/songs" class="btn btn-outline-success mr-3" th:if="${access}">Добавить песню</a>
+        <a href="/search/songs" class="btn btn-outline-primary">Поиск...</a>
+    </div>
+
+    <!--/*@thymesVar id="songs" type="com.vakhnenko.dto.song.SongResponse[]"*/-->
+    <table class="table" th:if="${songs} != null">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Название</th>
+            <th scope="col">Исполнитель</th>
+            <th scope="col">Альбом</th>
+            <th scope="col">Продолжительность (мин.)</th>
+            <th scope="col"></th>
+            <th th:if="${access}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="song : ${songs}">
+            <th scope="row" th:text="${songStat.index + 1}"></th>
+            <td><a th:href="'update/songs/' + ${song.getSongId()}" th:text="${song.getSongName()}"></a></td>
+            <td th:text="${song.getAlbum().getPerformer().getPerformerName()}"></td>
+            <td th:text="${song.getAlbum().getAlbumName()}"></td>
+            <td th:text="${song.getSongLength()}"></td>
+            <td th:if="${access}">
+                <a class="btn btn-outline-danger" th:href="'/delete/songs/' + ${song.getSongId()}">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form>
+        <!--/*@thymesVar id="currentPage" type="java.lang.Integer"*/-->
+        <div class="d-flex justify-content-center mt-5 mb-5">
+            <button name="pageBack" th:value="${currentPage}">&lt;</button>
+            <input type="text" name="currentPage" class="ml-2 mr-2 text-center" th:value="'Страница ' + ${currentPage}"
+                   readonly>
+            <button name="pageForward" th:value="${currentPage}">&gt;</button>
+        </div>
+    </form>
+
+    <!--/*@thymesVar id="error" type="String"*/-->
+    <div th:if="${error} != null">
+        <p th:replace="modals :: errorModal(${error})"></p>
+    </div>
+</form>
+</body>
+</html>

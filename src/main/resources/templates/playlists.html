@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваши плейлисты</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<!--/*@thymesVar id="playlists" type="com.vakhnenko.dto.playlist.PlaylistResponse[]"*/-->
+<!--/*@thymesVar id="username" type="java.lang.String"*/-->
+<!--/*@thymesVar id="currentPage" type="java.lang.Integer"*/-->
+<form>
+    <div>
+        <nav class="navbar navbar-light bg-light navbar-expand-md">
+            <a href="/" class="navbar-brand">Ваши плейлисты</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="navbar-item">
+                    <a href="/performers" class="nav-link">Исполнители</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/albums" class="nav-link">Альбомы</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/songs" class="nav-link">Песни</a>
+                </li>
+            </ul>
+            <form action="/logout">
+                <button type="submit" class="btn btn btn-danger" th:text="'Выход (' + ${username} + ')'"
+                        name="logout"></button>
+            </form>
+        </nav>
+    </div>
+
+    <div class="d-flex flex-row mt-5 ml-5">
+        <a href="/add/playlists" class="btn btn-outline-success mr-3">Добавить плейлист</a>
+        <a href="/search/playlists" class="btn btn-outline-primary">Поиск...</a>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3" th:each="playlist : ${playlists}">
+                <div class="card">
+                    <div class="card-header">
+                        <img class="card-img-top" alt="Card header image" th:src="@{/images/playlist_icon.png}">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center" th:text="${playlist.getPlaylistName()}"></h5>
+                    </div>
+                    <div class="card-footer">
+                        <a th:href="'/playlists/' + ${playlist.getPlaylistId()}"
+                           class="btn btn-info float-left">
+                            Открыть
+                        </a>
+                        <a th:href="'/delete/playlists/' + ${playlist.getPlaylistId()}"
+                           class="btn btn-danger float-right">
+                            Удалить
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form>
+        <div class="d-flex justify-content-center mt-5">
+            <button name="pageBack" th:value="${currentPage}">&lt;</button>
+            <input type="text" name="currentPage" class="ml-2 mr-2 text-center" th:value="'Страница ' + ${currentPage}"
+                   readonly>
+            <button name="pageForward" th:value="${currentPage}">&gt;</button>
+        </div>
+    </form>
+
+    <!--/*@thymesVar id="error" type="String"*/-->
+    <div th:if="${error} != null">
+        <p th:replace="modals :: errorModal(${error})"></p>
+    </div>
+
+</form>
+</body>
+</html>

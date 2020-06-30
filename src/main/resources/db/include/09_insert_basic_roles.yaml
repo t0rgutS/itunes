@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_basic_roles
+      author: fvakhnenko
+      tagDatabase: Version 1
+      changes:
+        - insert:
+           tableName: user_roles
+           columns:
+              - column:
+                  name: role
+                  value: ADMIN
+        - insert:
+           tableName: user_roles
+           columns:
+              - column:
+                   name: role
+                   value: USER

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="code" type="java.lang.Integer"*/-->
+<!--/*@thymesVar id="message" type="java.lang.String"*/-->
+<!--/*@thymesVar id="path" type="java.lang.String"*/-->
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Ошибка: ' + ${code}">Evil error page</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body class="bg-dark">
+<h1 class="text-center text-danger mt-5" th:text="${code}">Код ошибки</h1>
+<h2 class="text-center text-danger mt-2" th:text="${message}">Произошла ошибка...</h2>
+<h3 class="text-center text-danger mt-2" th:text="'Ошибка возникла на странице: ' + ${path}"></h3>
+<img th:src="@{/images/error_pic.jpg}" class="mx-auto d-block w-50 h-50 mt-2">
+</body>
+</html>

@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_roles
+      author: fvakhnenko
+      tagDatabase: Version 1
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: role_id
+                  type: smallint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar
+                  constraints:
+                    nullable: false
+                    unique: true

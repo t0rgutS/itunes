@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Обновление</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<form>
+    <!--/*@thymesVar id="username" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="updateText" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="id" type="java.lang.Integer"*/-->
+    <div>
+        <nav class="navbar navbar-light bg-light navbar-expand-md">
+            <p class="navbar-brand mr-auto" th:text="${updateText}">Обновление</p>
+            <form action="/logout">
+                <button type="submit" class="btn btn btn-danger" th:text="'Выход (' + ${username} + ')'"
+                        name="logout"></button>
+            </form>
+        </nav>
+    </div>
+
+    <!--/*@thymesVar id="table" type="java.lang.String"*/-->
+    <div th:if="${table} == 'playlists'" class="col mt-5">
+        <!--/*@thymesVar id="playlistName" type="java.lang.String"*/-->
+        <form>
+            <div class="d-flex justify-content-center mt-4">
+                Название: <input type="text" placeholder="Название плейлиста..." name="playlistName" id="playlistName"
+                                 th:value="${playlistName}" class="form-control input-group-lg col-xl-8 ml-3 mb-4"
+                                 autofocus required>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" name="update" th:value="${id}" class="btn btn-outline-primary mx-auto mt-4">
+                    Подтвердить
+                </button>
+            </div>
+        </form>
+    </div>
+    <div th:if="${table} == 'performers'" class="col mt-5">
+        <!--/*@thymesVar id="performerName" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="logoAddr" type="java.lang.String"*/-->
+        <form>
+            <div class="d-flex justify-content-center mt-4">
+                Исполнитель: <input type="text" placeholder="Исполнитель..." name="performerName" id="performerName"
+                                    th:value="${performerName}" class="form-control input-group-lg col-xl-8 ml-3 mb-4"
+                                    autofocus required>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" name="update" th:value="${id}" class="btn btn-outline-primary mx-auto mt-4">
+                    Подтвердить
+                </button>
+            </div>
+        </form>
+    </div>
+    <div th:if="${table} == 'albums'" class="col mt-5">
+        <!--/*@thymesVar id="genre" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="albumDate" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="performerName" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="coverAddr" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="albumName" type="java.lang.String"*/-->
+        <form>
+            <div class="d-flex justify-content-center mt-4">
+                Название альбома: <input type="text" placeholder="Название альбома..." name="albumName"
+                                         th:value="${albumName}" class="form-control input-group-lg col-xl-8 ml-3
+                                         mb-4" autofocus required>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                Дата создания альбома: <input type="date" name="albumDate"
+                                              th:value="${#dates.format(albumDate, 'yyyy-MM-dd')}"
+                                              class="ml-3 mb-4" required>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                Исполнитель: <input type="text" placeholder="Исполнитель..." name="performerName"
+                                    th:value="${performerName}" class="form-control input-group-lg col-xl-8 ml-3 mb-4"
+                                    required>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                Жанр <input type="text" placeholder="Жанр..." name="genre"
+                            th:value="${genre}" class="form-control input-group-lg col-xl-8 ml-3 mb-4" required>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" name="update" th:value="${id}" class="btn btn-outline-primary mx-auto mt-4">
+                    Подтвердить
+                </button>
+            </div>
+        </form>
+    </div>
+    <div th:if="${table} == 'songs'" class="col mt-5">
+        <!--/*@thymesVar id="genre" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="songLength" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="playlist" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="performerName" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="songName" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="albumName" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="playlists" type="com.vakhnenko.dto.playlist.PlaylistResponse[]"*/-->
+        <!--/*@thymesVar id="access" type="java.lang.Boolean"*/-->
+        <div th:if="${access}">
+            <form>
+                <div class="d-flex justify-content-center mt-4">
+                    Название песни: <input type="text" placeholder="Название песни..." name="songName"
+                                           th:value="${songName}"
+                                           class="form-control input-group-lg col-xl-8 ml-3 mb-4"
+                                           autofocus required>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    Длительность (мин.): <input type="text" placeholder="Продолжительность песни (мин.)..."
+                                                name="songLength"
+                                                th:value="${songLength}"
+                                                class="form-control input-group-lg col-xl-8 ml-3 mb-4" required>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    Альбом: <input type="text" placeholder="Входит в альбом..." name="albumName"
+                                   th:value="${albumName}" class="form-control input-group-lg col-xl-8 ml-3 mb-4"
+                                   required>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    Исполнитель: <input type="text" placeholder="Исполнитель..." name="performerName"
+                                        th:value="${performerName}"
+                                        class="form-control input-group-lg col-xl-8 ml-3 mb-4" required>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    Добавить в плейлист: <select name="playlist"
+                                                 class="form-control input-group-lg col-xl-8 ml-3 mb-4" required>
+                    <option th:each="play: ${playlists}" th:value="${play.getPlaylistId()}"
+                            th:text="${play.getPlaylistName()}"
+                            th:selected="${play.getPlaylistId() == playlist}"></option>
+                    <option th:text="'Не добавлять'" th:value="''"></option>
+                </select>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" name="update" th:value="${id}"
+                            class="btn btn-outline-primary mx-auto mt-4">
+                        Подтвердить
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div th:if="${access} == null">
+            <form>
+                <div class="d-flex justify-content-center mt-4">
+                    Название песни: <input type="text" placeholder="Название песни..." name="songName"
+                                           th:value="${songName}"
+                                           class="form-control input-group-lg col-xl-8 ml-3 mb-4"
+                                           readonly>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    Длительность (мин.): <input type="text" placeholder="Продолжительность песни (мин.)..."
+                                                name="songLength"
+                                                th:value="${songLength}"
+                                                class="form-control input-group-lg col-xl-8 ml-3 mb-4" readonly>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    Альбом: <input type="text" placeholder="Входит в альбом..." name="albumName"
+                                   th:value="${albumName}" class="form-control input-group-lg col-xl-8 ml-3 mb-4"
+                                   readonly>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    Исполнитель: <input type="text" placeholder="Исполнитель..." name="performerName"
+                                        th:value="${performerName}"
+                                        class="form-control input-group-lg col-xl-8 ml-3 mb-4" readonly>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    Добавить в плейлист: <select name="playlist"
+                                                 class="form-control input-group-lg col-xl-8 ml-3 mb-4">
+                    <option th:each="play: ${playlists}" th:value="${play.getPlaylistId()}"
+                            th:text="${play.getPlaylistName()}"
+                            th:selected="${play.getPlaylistId() == playlist}"></option>
+                    <option th:text="'Не добавлять'" th:value="''"></option>
+                </select>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" name="addToPlaylist" th:value="${id}"
+                            class="btn btn-outline-primary mx-auto mt-4">
+                        Подтвердить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--/*@thymesVar id="error" type="String"*/-->
+    <div th:if="${error} != null">
+        <p th:replace="modals :: errorModal(${error})"></p>
+    </div>
+
+</form>
+</body>
+</html>
