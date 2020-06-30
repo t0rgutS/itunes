@@ -155,6 +155,13 @@ public class SongService {
                 basePredicate = builder.like(root.get("album").get("genre").get("genre"),
                         "%" + request.getGenre() + "%");
         }
+        if (request.getSongLength() != null) {
+            if (basePredicate != null)
+                basePredicate = builder.and(basePredicate, builder.equal(root.get("songLength"),
+                        request.getSongLength()));
+            else
+                basePredicate = builder.equal(root.get("songLength"), request.getSongLength());
+        }
         if (basePredicate != null)
             query.where(basePredicate);
         TypedQuery<Song> typedQuery = manager.createQuery(query);

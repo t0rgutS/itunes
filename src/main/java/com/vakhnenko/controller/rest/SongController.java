@@ -51,6 +51,7 @@ public class SongController {
                                            @RequestParam(required = false) String playlistAuthor,
                                            @RequestParam(required = false) String performerName,
                                            @RequestParam(required = false) String genre,
+                                           @RequestParam(required = false) String songLength,
                                            @RequestParam(required = false) Long performerId,
                                            @RequestParam(required = false) Long albumId,
                                            @RequestParam(required = false) Long playlistId,
@@ -81,6 +82,11 @@ public class SongController {
             if (genre != null)
                 if (!genre.equals(""))
                     request.setGenre(URLDecoder.decode(genre, "UTF-8"));
+            if (songLength != null) {
+                songLength = songLength.replaceAll("[^\\d.,]", "").replaceAll(",", ".");
+                if (!songLength.equals(""))
+                    request.setSongLength(songLength);
+            }
             request.setPage(page);
             return songService.search(request).map(SongResponse::new);
         } catch (UnsupportedEncodingException uee) {
