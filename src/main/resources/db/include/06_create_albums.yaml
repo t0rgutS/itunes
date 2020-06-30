@@ -42,9 +42,6 @@ databaseChangeLog:
                            referencedTableName: performers
                            referencedColumnNames: performer_id
                            deleteCascade: true
-                    - columt:
-                        name: cover_addr
-                        type: varchar
                     - column:
                         name: created_at
                         type: bigint

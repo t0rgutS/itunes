@@ -20,9 +20,6 @@ databaseChangeLog:
                         constraints:
                           nullable: false
                     - column:
-                        name: logo_addr
-                        type: varchar
-                    - column:
                         name: created_at
                         type: bigint
                         constraints:
