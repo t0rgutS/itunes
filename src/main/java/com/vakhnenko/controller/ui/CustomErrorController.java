@@ -24,10 +24,10 @@ public class CustomErrorController implements ErrorController {
             errorCode = 500;
             errorMsg = "Неопознанная ошибка!";
         }
+        if (errorCode == 404)
+            return "redirect:/";
         if (errorMsg.equals("")) {
-            if (errorCode == 404)
-                errorMsg = "Страница не найдена!";
-            else if (errorCode == 403)
+            if (errorCode == 403)
                 errorMsg = "Доступ запрещен!";
             else if (errorCode == 401)
                 errorMsg = "Вы не авторизированы!";
