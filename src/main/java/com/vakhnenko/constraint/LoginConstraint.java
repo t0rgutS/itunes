@@ -14,7 +14,7 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @NotEmpty
-@Length(min = 5, max = 100)
+@Length(min = 5, max = 100, message = "Логин должен содержать не меньше 5 символов и не больше 100 символов!")
 @Pattern(regexp = "^[a-zA-Z0-9\\-_]*$", message = "Содержит недопустимые символы!")
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)

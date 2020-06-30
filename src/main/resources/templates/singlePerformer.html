@@ -141,12 +141,6 @@
             <button name="pageForward" th:value="${currentPage}">&gt;</button>
         </div>
     </form>
-
-    <!--/*@thymesVar id="error" type="String"*/-->
-    <div th:if="${error} != null">
-        <p th:replace="modals :: errorModal(${error})"></p>
-    </div>
-
 </form>
 </body>
 </html>

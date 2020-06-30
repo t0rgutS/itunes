@@ -13,14 +13,14 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @NotEmpty
-@Length(min = 2, message = "Слишком короткое имя!")
+@Length(min = 2, message = "Имя должно содержать как минимум два символа!")
 @Pattern(regexp = "^[a-zA-Zа-яА-Я\\s]*$", message = "Содержит недопустимые символы!")
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Documented
 @Constraint(validatedBy = {})
 public @interface NameConstraint {
-    String message() default "Имя задано некорректно!";
+    String message() default "Слишком короткое имя!";
     Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default { };
 }
