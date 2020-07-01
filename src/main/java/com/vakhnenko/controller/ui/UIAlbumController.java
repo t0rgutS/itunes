@@ -263,7 +263,6 @@ public class UIAlbumController {
                     return "redirect:/albums";
                 } catch (ParseException e) {
                     model.addAttribute("albumName", albumName);
-                    model.addAttribute("albumDate", albumDate);
                     model.addAttribute("performerName", performerName);
                     model.addAttribute("genre", genre);
                     e.printStackTrace();
@@ -271,7 +270,12 @@ public class UIAlbumController {
             }
         } catch (Exception e) {
             model.addAttribute("albumName", albumName);
-            model.addAttribute("albumDate", albumDate);
+            if (albumDate != null)
+                try {
+                    model.addAttribute("albumDate", new SimpleDateFormat("yyyy-MM-dd").parse(albumDate));
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
             model.addAttribute("performerName", performerName);
             model.addAttribute("genre", genre);
             Throwable root = ExceptionUtils.getRootCause(e);
@@ -349,7 +353,6 @@ public class UIAlbumController {
                     return "redirect:/albums/" + id;
                 } catch (ParseException e) {
                     model.addAttribute("albumName", albumName);
-                    model.addAttribute("albumDate", albumDate);
                     model.addAttribute("performerName", performerName);
                     model.addAttribute("genre", genre);
                     model.addAttribute("error", "Не удалось получить дату релиза!");
@@ -358,7 +361,12 @@ public class UIAlbumController {
             }
         } catch (Exception e) {
             model.addAttribute("albumName", albumName);
-            model.addAttribute("albumDate", albumDate);
+            if (albumDate != null)
+                try {
+                    model.addAttribute("albumDate", new SimpleDateFormat("yyyy-MM-dd").parse(albumDate));
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
             model.addAttribute("performerName", performerName);
             model.addAttribute("genre", genre);
             Throwable root = ExceptionUtils.getRootCause(e);
