@@ -6,6 +6,7 @@ import com.vakhnenko.entity.User;
 import com.vakhnenko.exception.BadRequestException;
 import com.vakhnenko.exception.NotFoundException;
 import com.vakhnenko.utils.BasicRoles;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,15 +49,20 @@ public class RegistrationController {
             request.setRole(BasicRoles.USER.getValue());
             request.setActive(true);
             restTemplate.postForObject("http://localhost:8080/api/users/create", request, User.class);
-        } catch (BadRequestException bre) {
-            model.addAttribute("error", bre.getMessage());
+        } catch (Exception e) {
             model.addAttribute("login", login);
             model.addAttribute("username", username);
-            return "registration";
-        } catch (NotFoundException nfe) {
-            model.addAttribute("error", nfe.getMessage());
-            model.addAttribute("login", login);
-            model.addAttribute("username", username);
+            Throwable root = ExceptionUtils.getRootCause(e);
+            System.out.println(root.getMessage());
+            if (!root.getMessage().contains("\"message\":")) {
+                model.addAttribute("error", root.getMessage());
+            } else {
+                String[] errorParts = root.getMessage().split("[{\\[\\]},]");
+                int i = 0;
+                while (!errorParts[i].contains("\"message\":"))
+                    i++;
+                model.addAttribute("error", errorParts[i].substring(11, errorParts[i].length() - 1));
+            }
             return "registration";
         }
         return "redirect:/";
