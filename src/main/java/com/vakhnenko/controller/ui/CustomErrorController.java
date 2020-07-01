@@ -38,9 +38,6 @@ public class CustomErrorController implements ErrorController {
         }
         if (path.equals(""))
             path = "А нет пути, не удалось получить!";
-        Throwable throwable = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
-        if (throwable != null)
-            System.out.println(throwable.getMessage());
         model.addAttribute("code", errorCode);
         model.addAttribute("message", errorMsg);
         model.addAttribute("path", path);

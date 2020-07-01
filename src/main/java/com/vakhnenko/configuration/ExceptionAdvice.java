@@ -36,12 +36,12 @@ public class ExceptionAdvice {
                 errorMessage = root.getMessage();
         }
         HttpStatus status;
-        if (exception instanceof NotFoundException)
+        if (root instanceof NotFoundException)
             status = HttpStatus.NOT_FOUND;
-        else if (exception instanceof BadRequestException || exception instanceof MethodArgumentNotValidException
+        else if (root instanceof BadRequestException || root instanceof MethodArgumentNotValidException
                 || root instanceof ConstraintViolationException)
             status = HttpStatus.BAD_REQUEST;
-        else if (exception instanceof AccessDeniedException || root instanceof AccessDeniedException)
+        else if (root instanceof AccessDeniedException || root instanceof AccessDeniedException)
             status = HttpStatus.FORBIDDEN;
         else
             status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -57,7 +57,7 @@ public class ExceptionAdvice {
                     + errorMessage);
         else
             log.error("Ошибка: " + root.getClass() + ": " + errorMessage);
-        return ResponseEntity.status(status).contentType(MediaType.APPLICATION_JSON)
+        return ResponseEntity.status(status)
                 .body(new ExceptionResponse(status.value(), errorMessage, path, method));
     }
 }
