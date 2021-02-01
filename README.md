@@ -32,3 +32,5 @@
 #### Для тестирования API можно использовать:
 - Swagger UI: http://localhost:8080/swagger-ui.html
 - UI на Bootsrap: http://localhost:8080
+
+Перед началом тестирования необходимо установить СУБД PostgreSQL и создать базу Itunes_DataBase.
